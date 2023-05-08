@@ -1,0 +1,76 @@
+
+files:
+- gameonlinux_installer: https://installer.launcher.xsolla.com/xlauncher-builds/xsolla-launcher-update/4097/bin/web_installer.exe
+game:
+  arch: win64
+  exe: $GAMEDIR/drive_c/users/Public/Games/gameonlinux-Launcher.exe
+  prefix: $GAMEDIR
+installer:
+- task:
+    arch: win64
+    name: create_prefix
+    prefix: $GAMEDIR
+- task:
+    app: win10
+    arch: win64
+    description: Setting Windows 10 mode for Wine
+    name: winetricks
+    prefix: $GAMEDIR
+- task:
+    app: corefonts
+    description: Microsoft TrueType Fonts
+    name: winetricks
+    prefix: $GAMEDIR
+- task:
+    app: d3dx10_43
+    description: Installing D3D10_43 Dlls
+    name: winetricks
+    prefix: $GAMEDIR
+- task:
+    app: d3dx10
+    description: Installing D3D10 Dlls
+    name: winetricks
+    prefix: $GAMEDIR
+- task:
+    app: vcrun2013
+    description: Visual C++ Runtime 2013
+    name: winetricks
+    prefix: $GAMEDIR
+- task:
+    app: vcrun2015
+    description: Visual C++ Runtime 2015
+    name: winetricks
+    prefix: $GAMEDIR
+- task:
+    app: d3dx11_43
+    description: Installing D3D11_43
+    name: winetricks
+    prefix: $GAMEDIR
+- task:
+    app: dxvk173
+    description: Installing Dxvk173 Dlls
+    name: winetricks
+    prefix: $GAMEDIR
+- task:
+    description: Setting minimum required video memory size to 1024
+    key: VideoMemorySize
+    name: set_regedit
+    path: HKEY_CURRENT_USER\Software\Wine\Direct3D
+    prefix: $GAMEDIR
+    value: 1024
+- task:
+    description: Installing game. You will receive an error about installing Visual
+      C++ runtime 2015 for x64. It is safe to click YES to continue the installation.
+    executable: gameonlinux_installer
+    name: wineexec
+    prefix: $GAMEDIR
+system:
+  env:
+    PBA_ENABLE: 1
+    __GL_SHADER_DISK_CACHE: '1'
+    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR
+    __GL_THREADED_OPTIMIZATIONS: '1'
+    mesa_glthread: true
+  pulse_latency: true
+
+
